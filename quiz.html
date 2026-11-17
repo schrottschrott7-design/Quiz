@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ein Denar für alle? – Quiz</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Unbounded:wght@600;700&display=swap">
+<style>
+:root{--night:#120a1c;--wine:#8a2f66;--gold:#f6c453;--gold2:#e39a2a;--ink:#f6effa;--mute:#b9a9c9;--ok:#5fdc9a;--bad:#ff6f7d;--glass:rgba(255,255,255,.07);--edge:rgba(255,255,255,.14);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100dvh;background-color:var(--night);background-image:radial-gradient(60% 40% at 85% -5%,rgba(138,47,102,.55),transparent 70%),radial-gradient(70% 50% at 0% 100%,rgba(90,40,160,.45),transparent 70%);background-attachment:fixed;color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:600px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 18px max(40px,env(safe-area-inset-bottom))}
+h1,h2,.big{font-family:"Unbounded",system-ui,sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin:0}
+h1{font-size:clamp(2.1rem,9vw,3.1rem);margin:26px 0 16px}
+h2{font-size:1.3rem;margin:6px 0 8px}
+p{margin:0 0 14px}
+.mute{color:var(--mute)}
+.coin{--s:44px;width:var(--s);height:var(--s);flex:none;border-radius:50%;display:inline-grid;place-items:center;font-family:"Unbounded",sans-serif;font-weight:700;font-size:calc(var(--s)*.42);color:#7a4a05;background:radial-gradient(circle at 32% 28%,#fff1b8,var(--gold) 45%,var(--gold2));box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),inset 0 0 0 calc(var(--s)*.14) rgba(160,100,10,.3),0 6px 22px rgba(246,196,83,.35)}
+.spin{animation:flip 1s ease-out}
+@keyframes flip{from{transform:rotateY(0)}to{transform:rotateY(720deg)}}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.bars{flex:1;display:flex;gap:5px}
+.seg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.14)}
+.seg.on{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.pill{display:flex;align-items:center;gap:8px;padding:4px 14px 4px 4px;border-radius:99px;background:var(--glass);border:1px solid var(--edge);font-weight:700}
+.card{background:var(--glass);border:1px solid var(--edge);border-radius:24px;padding:22px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.opt{display:flex;gap:14px;align-items:center;width:100%;text-align:left;font:inherit;font-size:1.05rem;color:var(--ink);padding:13px 14px;margin-top:10px;background:rgba(255,255,255,.06);border:1.5px solid var(--edge);border-radius:16px;cursor:pointer;transition:transform .12s,background .12s,border-color .12s}
+.opt:hover{background:rgba(255,255,255,.12)}
+.opt:active{transform:scale(.985)}
+.key{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-weight:700;background:rgba(255,255,255,.1)}
+.opt.ok{border-color:var(--ok);background:rgba(95,220,154,.15)}
+.opt.ok .key{background:var(--ok);color:#06210f}
+.opt.bad{border-color:var(--bad);background:rgba(255,111,125,.14)}
+.opt.bad .key{background:var(--bad);color:#2a0409}
+.opt.dim{opacity:.45}
+.fb{margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(0,0,0,.28);border-left:4px solid var(--c);animation:up .3s}
+.btn{display:block;width:100%;font:inherit;font-weight:700;font-size:1.05rem;padding:15px 20px;margin-top:14px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#3a2203;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--edge)}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 20px}
+.big{font-size:3.4rem;margin:14px 0 4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const Q=[
+{q:"Was vereinbart der Gutsherr mit den ersten Arbeitern?",o:["Einen Denar für den Tag","Zwei Denare für den Tag","Einen Denar pro Stunde","Lohn nach dem Ernteertrag"],a:0,e:"Er einigt sich mit ihnen auf einen Denar für den Tag und schickt sie in seinen Weinberg (V. 2)."},
+{q:"Was sagt der Gutsherr zu den Arbeitern, die er später findet?",o:["„Geht auch ihr hin in den Weinberg!“","„Kommt morgen wieder!“","„Ihr habt zu spät angefangen.“","„Wartet, bis die anderen fertig sind.“"],a:0,e:"Der Gutsherr lädt auch die später Gefundenen in seinen Weinberg ein (V. 4)."},
+{q:"Wer soll am Abend auszahlen, und in welcher Reihenfolge?",o:["Der Verwalter, von den Letzten bis zu den Ersten","Der Verwalter, von den Ersten bis zu den Letzten","Der Gutsherr selbst, von den Ersten bis zu den Letzten","Die Arbeiter untereinander"],a:0,e:"Der Verwalter soll auszahlen, und zwar angefangen bei den Letzten (V. 8)."},
+{q:"Wie viel bekommen die Arbeiter, die um die elfte Stunde kamen?",o:["Einen Denar","Einen halben Denar","Ein Zwölftel Denar","Nichts"],a:0,e:"Auch die Arbeiter der elften Stunde, also kurz vor Feierabend, bekommen einen ganzen Denar (V. 9)."},
+{q:"Was dachten die ersten Arbeiter bei der Auszahlung?",o:["Dass sie mehr bekommen würden","Dass sie weniger bekommen würden","Dass sie gar nichts bekommen würden","Dass sie entlassen würden"],a:0,e:"Die ersten Arbeiter rechneten mit mehr, bekamen aber ebenfalls einen Denar (V. 10)."},
+{q:"Womit begründen die ersten Arbeiter ihren Ärger?",o:["Sie haben die Last des Tages und die Hitze getragen, die letzten nur eine Stunde gearbeitet","Der Lohn kam zu spät","Sie haben weniger als vereinbart bekommen","Die Arbeit war schlecht organisiert"],a:0,e:"Sie finden es ungerecht, dass die Letzten, die nur eine Stunde gearbeitet haben, ihnen gleichgestellt werden (V. 12)."},
+{q:"Wie antwortet der Gutsherr auf den Vorwurf?",o:["„Ich tue dir kein Unrecht, wir waren uns doch über einen Denar einig.“","„Ihr habt zu langsam gearbeitet.“","„Das war ein Fehler des Verwalters.“","„Nächstes Mal zahle ich mehr.“"],a:0,e:"Der Gutsherr erinnert an die Abmachung: einen Denar, und genau den haben sie bekommen (V. 13)."},
+{q:"Was sagt der Gutsherr zu dem Arbeiter, der sich beschwert?",o:["„Nimm das Deine und geh. Ich will dem Letzten so viel geben wie dir.“","„Bleib, du bekommst noch mehr.“","„Du musst morgen länger arbeiten.“","„Gib den Letzten etwas von deinem Lohn ab.“"],a:0,e:"Er schickt ihn mit dem, was ihm zusteht, weg und will dem Letzten genauso viel geben (V. 14)."},
+{q:"Was wirft der Gutsherr den Murrenden am Ende vor?",o:["Sie blicken neidisch, weil er gütig ist","Sie sind faul","Sie haben schlecht gearbeitet","Sie sind undankbar gegenüber dem Verwalter"],a:0,e:"Mit seiner Frage deckt er den Neid auf: Die Ersten ärgern sich über seine Güte (V. 15)."},
+{q:"Wie lautet der Schlusssatz des Gleichnisses?",o:["Die Letzten werden Erste und die Ersten Letzte sein","Die Ersten bleiben die Ersten","Wer nicht arbeitet, bekommt keinen Lohn","Wer am längsten arbeitet, bekommt am meisten"],a:0,e:"Das Bild wird umgekehrt: Die Letzten werden Erste und die Ersten Letzte (V. 16)."}
+];
+let i=0,score=0,streak=0,locked=false;
+const app=document.getElementById("app");
+function intro(){
+  i=0;score=0;streak=0;
+  app.innerHTML='<div class="coin spin" style="--s:88px">1</div><h1>Ein Denar für alle?</h1><p class="mute">Quiz zum Gleichnis von den Arbeitern im Weinberg (Mt 20,1–16). '+Q.length+' Fragen – für jede richtige Antwort gibt es einen Denar.</p><button class="btn" id="go">Quiz starten</button>';
+  document.getElementById("go").onclick=show;
+}
+function show(){
+  const q=Q[i];locked=false;
+  const idx=q.o.map((_,k)=>k).sort(()=>Math.random()-.5);
+  app.innerHTML='<div class="top"><div class="bars" aria-hidden="true">'+Q.map((_,k)=>'<div class="seg'+(k<i?" on":"")+'"></div>').join("")+'</div><div class="pill"><span class="coin" id="cc" style="--s:30px">1</span><span id="cn">'+score+'</span></div></div>'+
+  '<div class="card"><p class="mute">Frage '+(i+1)+' von '+Q.length+'</p><h2>'+q.q+'</h2>'+
+  idx.map((k,n)=>'<button class="opt" data-k="'+k+'"><span class="key">'+"ABCD"[n]+'</span><span>'+q.o[k]+"</span></button>").join("")+'<div id="fb"></div></div>';
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(b));
+}
+function mark(b,cls,sym){b.classList.add(cls);b.querySelector(".key").textContent=sym}
+function pick(b){
+  if(locked)return;locked=true;
+  const q=Q[i],k=+b.dataset.k,right=k===q.a;
+  app.querySelectorAll(".opt").forEach(x=>{if(x!==b)x.classList.add("dim")});
+  b.classList.remove("dim");
+  if(right){
+    score++;streak++;mark(b,"ok","✓");
+    document.getElementById("cn").textContent=score;
+    const c=document.getElementById("cc");c.classList.remove("spin");void c.offsetWidth;c.classList.add("spin");
+  }else{
+    streak=0;mark(b,"bad","✗");
+    app.querySelectorAll(".opt").forEach(x=>{if(+x.dataset.k===q.a){x.classList.remove("dim");mark(x,"ok","✓")}});
+  }
+  const fb=document.getElementById("fb");
+  fb.innerHTML='<div class="fb" style="--c:'+(right?"var(--ok)":"var(--bad)")+'"><strong>'+(right?"Richtig! +1 Denar":"Leider falsch.")+(right&&streak>=2?" 🔥 "+streak+" in Folge":"")+"</strong><br>"+q.e+'</div><button class="btn" id="nx">'+(i<Q.length-1?"Weiter":"Ergebnis zeigen")+"</button>";
+  const n=document.getElementById("nx");n.focus();
+  n.onclick=()=>{i++;i<Q.length?show():end()};
+}
+function end(){
+  const t=score===Q.length?"Weinberg-Profi 🍇":score>=5?"Gut aufgepasst":score>=3?"Ein Anfang ist gemacht":"Noch eine Runde?";
+  app.innerHTML='<h1>'+t+'</h1><div class="stack">'+(score?Array.from({length:score},()=>'<span class="coin" style="--s:40px">1</span>').join(""):'<span class="mute">Keine Denare diesmal.</span>')+'</div><div class="big">'+score+" / "+Q.length+'</div><p class="mute">richtige Antworten</p><button class="btn" id="again">Nochmal spielen</button>';
+  document.getElementById("again").onclick=intro;
+}
+intro();
+</script>
+</body>
+</html>
